@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LocationSidebar } from '../../components/sidebar';
+import Sidebar from '../../components/sidebar';
 
 import Button from '../../components/buttons';
 const Location = () => {
@@ -63,7 +63,7 @@ const Location = () => {
 
     return (
         <>
-            <LocationSidebar />
+            <Sidebar />
             <div className='  flex sm:flex-wrap flex-col lg:w-4/5 md:w-fit h-screen bg-white ml-64'>
                 <div className='w-80 h-[150px]  flex justify-left bg-white-300 items-left'>
                     <div className='mt-6 ml-4'>

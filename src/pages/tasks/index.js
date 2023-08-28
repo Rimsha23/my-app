@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/buttons';
-import { TaskSidebar } from '../../components/sidebar';
-
+import Sidebar from '../../components/sidebar';
 import Checkbox from '../../components/Checkbox';
 const Tasks = () => {
 
@@ -10,6 +9,7 @@ const Tasks = () => {
     const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
 
+   
     const handleOnChange = (e) => {
         setTask(task);
         setTime(time)
@@ -86,9 +86,7 @@ const Tasks = () => {
             const incompleteTask = updatedIncompleteTasks.filter(task => !task.isChecked);
             setIncompleteTasks(incompleteTask);
         }
-        else {
-
-        }
+      
     }
     const handleTaskCheckedboxChange = (taskId, e) => {
         e.preventDefault();
@@ -109,12 +107,18 @@ const Tasks = () => {
         }
 
     }
-    const [isSideboxOpen,setIsSideboxOpen] = useState(true);
-
+    const [isSideboxOpen,setIsSideboxOpen] = useState(false);
+const [openTask,setOpenTask]= useState(null);
+const handleOnClick = (taskId) => {
+    const task = incompleteTasks.find(task => task.id === taskId);
+    setIsSideboxOpen(true);
+    setOpenTask(task);
+    console.log('hello')
+}
     return (
         <>
             <div className='flex flex-row'>
-                <TaskSidebar />
+                <Sidebar />
                 <div className='flex  flex-col lg:w-3/5 md:w-fit h-screen bg-white ml-64'>
 
                     <div className='mt-6  flex flex-col justify-start items-left'>
@@ -126,8 +130,10 @@ const Tasks = () => {
                         <h3 className='mt-2 mb-2 font-bold text-gray-900 '>Incomplete</h3>
                         <form className='flex flex-col items-left'>
 
-                            <div className='w-full'>
+                                       
+                           
                                 {incompleteTasks.map(task => (
+                                     <div className='w-full' onClick={()=>handleOnClick(task.id)} >
                                     <Checkbox
                                         key={task.id}
                                         task={task.task}
@@ -135,8 +141,9 @@ const Tasks = () => {
                                         isChecked={task.isChecked}
                                         onChange={(e) => handleTaskCheckboxChange(task.id, e)}
                                     />
+                                    </div>
                                 ))}
-                            </div>
+                            
 
                         </form>
                     </div>
@@ -162,31 +169,11 @@ const Tasks = () => {
                         </form>
                     </div>
                 </div>
-                <div className={`w-[390px] h-[122px] bg-white mt-8 ${isSideboxOpen ? '' : 'hidden'}`} >
-                    <div className=' flex flex-col'>
-
-                        <div className='flex flex-row'>
-                            <div className='flex flex-col ml-3 mt-4 '>
-                                <h2 className=' text-black font-bold text-[18px]'>{incompleteTasks[0].task}</h2>
-                                <p className='text-gray-700 text-[16px] mt-0'>{incompleteTasks[0].description}</p>
-                            </div>
-                            <div className='flex justify-right items-right h-[52px] w-[52px] bg-yellow-400 ml-12 mt-4 rounded-xl'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" className='absolute right-0  mr-8 mt-4 ml-8 '>
-                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 6V12L16 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-
-
-
-                        </div>
-                        <div className='flex flex-row'>
-                            <Button variant='sidebox' size='small' className='mt-6 ml-44' onClick={()=>setIsSideboxOpen(false)}>Skip</Button>
-                            <Button variant='sidebox' size='small' className='mt-6 ml-5 text-inline' onClick={()=>setIsSideboxOpen(false)}>Remind me later</Button>
-
-                        </div>
-                    </div>
-                </div>
+                <Sidebox 
+                isSideboxOpen={isSideboxOpen}
+                setIsSideboxOpen={setIsSideboxOpen}
+                openTask={openTask}
+                />
             </div>
 
             <CreateModal
@@ -274,5 +261,41 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, task, time, description, han
         </>
     );
 }
+const Sidebox=({isSideboxOpen,setIsSideboxOpen,openTask})=>{
+    if (!openTask) {
+        return null;
+    }
+return(
+    
+    <div className={`w-[390px] h-[122px] bg-white  mt-8 ${isSideboxOpen ? '': 'hidden'}`} >
+                    <div className=' flex flex-col'>
 
+                        <div className='flex flex-row'>
+                        
+                            <div className='flex flex-col ml-3 mt-4 '>
+                               
+                                <h2 className=' text-black font-bold text-[18px]'>{openTask.task}</h2>
+                                <p className='text-gray-700 text-[16px] mt-0'>{openTask.description}</p>
+                            </div>
+                    
+                            <div className='relative flex justify-right items-right h-[52px] w-[52px] bg-yellow-400 ml-12 mt-4 rounded-xl'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" className='absolute right-0  mr-4 mt-4 ml-8 '>
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 6V12L16 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+
+
+
+                        </div>
+                        <div className='flex flex-row'>
+                            <Button variant='sidebox' size='small' className='mt-6 ml-44' onClick={()=>setIsSideboxOpen(false)}>Skip</Button>
+                            <Button variant='sidebox' size='small' className='mt-6 ml-5 text-inline' onClick={()=>setIsSideboxOpen(false)}>Remind me later</Button>
+
+                        </div>
+                    </div>
+                </div>
+    
+);
+}
 export default Tasks;
