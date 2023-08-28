@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Button from '../../components/buttons';
+import Input from '../../components/input';
 const Login = () => {
+    const [passwordType, setPasswordType] = useState('password');
+    const [text, setText] = useState('Show')
+    const handleShow = (e) => {
+        e.preventDefault();
+        if (passwordType === 'password') {
+            setPasswordType('text')
+            setText('Hide');
+        }
+        else {
+            setPasswordType('password')
+            setText('Show');
+        }
+    }
     return (
         <>
             <div className="w-full min-h-screen flex justify-center items-center">
                 <div className="w-full max-w-xs">
-                    <form className="bg-white w-96  rounded px-8 pt-6 pb-8 mb-4 mt-8">
-                        <h2 className='text-black text-2xl mb-8 font-bold'>Log In</h2>
+                    <form className="bg-white w-96   rounded px-8 pt-6 pb-8 mb-4 mt-8">
+                        <h2 className='text-black text-2xl mb-8 font-bold text-center'>Log In</h2>
                         <div className="mb-4">
 
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline border border-slate-200" id="email" type="text" placeholder="Email" />
+                            <Input id="email" type='text' placeholder="Email" />
                         </div>
-                        <div className="mb-6">
+                        <div className="mb-6 relative">
 
-
-
-                            <input className="shadow appearance-none border border-slate-200 rounded w-full py-2 px-3 text-gray-700 mb-3  focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password"
+                            <Input id="password" type={passwordType} placeholder="Password"
                             />
-
+                            <button onClick={handleShow} className='absolute right-0 mt-2 mr-2 '
+                            >{text}</button>
                         </div>
                         <div className="flex items-center justify-between">
-                            <button className="bg-black hover:bg-white hover:border-black rounded-full text-white hover:text-black w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                            <Button className=" rounded-full focus:outline-none focus:shadow-outline" type="button" variant='primary' size='full'>
                                 Log In
-                            </button>
+                            </Button>
 
                         </div>
                     </form>
