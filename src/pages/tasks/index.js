@@ -72,9 +72,10 @@ const Tasks = () => {
 */}
     const handleTaskCheckboxChange = (taskId, e) => {
         e.preventDefault();
+        
         const updatedIncompleteTasks = incompleteTasks.map(task => {
             if (task.id === taskId) {
-                return { ...task, isChecked: !task.isChecked };
+                return { ...task, isChecked: !task.isChecked};
             }
             return task;
         });
@@ -82,7 +83,7 @@ const Tasks = () => {
 
         const completedTask = updatedIncompleteTasks.find(task => task.id === taskId && task.isChecked);
         if (completedTask) {
-            setCompletedTasks([...completedTasks, completedTask]);
+            setCompletedTasks([...completedTasks,completedTask]);
             const incompleteTask = updatedIncompleteTasks.filter(task => !task.isChecked);
             setIncompleteTasks(incompleteTask);
         }
@@ -90,19 +91,20 @@ const Tasks = () => {
     }
     const handleTaskCheckedboxChange = (taskId, e) => {
         e.preventDefault();
+        let newId = incompleteTasks.length+1;
         const updatedCompleteTasks =
             completedTasks.map(task => {
                 if (task.id === taskId) {
-                    return { ...task, isChecked: !task.isChecked };
+                    return { ...task, isChecked: !task.isChecked, id:newId };
                 }
                 return task;
             });
 
 
-        const incompleteTask = updatedCompleteTasks.find(task => task.id === taskId && !task.isChecked);
+        const incompleteTask = updatedCompleteTasks.find(task => task.id === newId && !task.isChecked);
         if (incompleteTask) {
             setIncompleteTasks([...incompleteTasks, incompleteTask]);
-            const completedTask = updatedCompleteTasks.filter(task => task.isChecked);
+            const completedTask = updatedCompleteTasks.filter(task => task.isChecked );
             setCompletedTasks(completedTask);
         }
 
@@ -113,7 +115,7 @@ const handleOnClick = (taskId) => {
     const task = incompleteTasks.find(task => task.id === taskId);
     setIsSideboxOpen(true);
     setOpenTask(task);
-    console.log('hello')
+    
 }
     return (
         <>
@@ -133,8 +135,9 @@ const handleOnClick = (taskId) => {
                                        
                            
                                 {incompleteTasks.map(task => (
-                                     <div className='w-full' onClick={()=>handleOnClick(task.id)} >
+                                     <div className='w-full' >
                                     <Checkbox
+                                    onClick={()=>handleOnClick(task.id)}
                                         key={task.id}
                                         task={task.task}
                                         time={task.time}

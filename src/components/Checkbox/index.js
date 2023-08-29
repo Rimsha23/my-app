@@ -1,5 +1,5 @@
 import React from 'react'
-const Checkbox = ({ task, time, isChecked, onChange }) => {
+const Checkbox = ({ task, time, isChecked, onChange,onClick }) => {
     return (
         <div className='w-80 flex h-[45px] flex justify-left items-left'>
             <input
@@ -10,7 +10,7 @@ const Checkbox = ({ task, time, isChecked, onChange }) => {
                 onChange={onChange}
             />
             <div className='flex flex-col'>
-                <label htmlFor={`task-${task.id}`} className='ml-2 mt-3 text-[15px] text-gray-700 font-bold'>{task}</label>
+                <label onClick={onClick} htmlFor={`task-${task.id}`} className='ml-2 mt-3 text-[15px] text-gray-700 font-bold'>{task}</label>
                 {time && <span className='text-[12px] text-gray-500'>⏰{time}</span>}
             </div>
         </div>
