@@ -9,7 +9,7 @@ const Tasks = () => {
     const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
 
-   
+
     const handleOnChange = (e) => {
         setTask(task);
         setTime(time)
@@ -28,20 +28,7 @@ const Tasks = () => {
         setIsModalOpen(false)
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
-    {/*
-    const [tasks, setTasks] = useState([
-        { id: 1, task: 'Submit my resume', time: 'Today, 17.00', isChecked: false },
-        { id: 2, task: 'Complete the test', time: 'Today, 10.00', isChecked: false },
-        { id: 3, task: 'Meeting with Jack', time: '24 Feb, 15.00', isChecked: false },
-        { id: 4, task: 'Buy a Chocolate for Mom', time: '24 Feb, 11.00', isChecked: false },
-        { id: 5, task: 'Facetime with Dad', time: '24 Feb, 18.00', isChecked: false },
-        { id: 6, task: 'Respond to Jane email', isChecked: true },
-        { id: 7, task: 'Rechedule weekly meeting', isChecked: true },
-        { id: 9, task: 'Service my bike', isChecked: true },
-        { id: 10, task: 'Recheck the agreement document', isChecked: true },
-        { id: 11, task: 'Check the latest on Community', isChecked: true },
 
-    ]);*/}
     const [incompleteTasks, setIncompleteTasks] = useState([
         { id: 1, task: 'Submit my resume', description: 'Send my resume to DigitalTolk', time: 'Today, 17.00', isChecked: false },
         { id: 2, task: 'Complete the test', time: 'Today, 10.00', description: '', isChecked: false },
@@ -58,24 +45,12 @@ const Tasks = () => {
 
     ]);
 
-
-
-
-
-    {/* setTasks(updateTasks);
-        const completedTasks = tasks.map(task => task.isChecked);
-        const incompleteTasks = tasks.map(task => !task.isChecked);
-
-    }
-    const completedTasks = tasks.map(task => task.isChecked);
-    const incompleteTasks = tasks.map(task => !task.isChecked);
-*/}
     const handleTaskCheckboxChange = (taskId, e) => {
         e.preventDefault();
-        
+
         const updatedIncompleteTasks = incompleteTasks.map(task => {
             if (task.id === taskId) {
-                return { ...task, isChecked: !task.isChecked};
+                return { ...task, isChecked: !task.isChecked };
             }
             return task;
         });
@@ -83,19 +58,19 @@ const Tasks = () => {
 
         const completedTask = updatedIncompleteTasks.find(task => task.id === taskId && task.isChecked);
         if (completedTask) {
-            setCompletedTasks([...completedTasks,completedTask]);
+            setCompletedTasks([...completedTasks, completedTask]);
             const incompleteTask = updatedIncompleteTasks.filter(task => !task.isChecked);
             setIncompleteTasks(incompleteTask);
         }
-      
+
     }
     const handleTaskCheckedboxChange = (taskId, e) => {
         e.preventDefault();
-        let newId = incompleteTasks.length+1;
+        let newId = incompleteTasks.length + 1;
         const updatedCompleteTasks =
             completedTasks.map(task => {
                 if (task.id === taskId) {
-                    return { ...task, isChecked: !task.isChecked, id:newId };
+                    return { ...task, isChecked: !task.isChecked, id: newId };
                 }
                 return task;
             });
@@ -104,19 +79,19 @@ const Tasks = () => {
         const incompleteTask = updatedCompleteTasks.find(task => task.id === newId && !task.isChecked);
         if (incompleteTask) {
             setIncompleteTasks([...incompleteTasks, incompleteTask]);
-            const completedTask = updatedCompleteTasks.filter(task => task.isChecked );
+            const completedTask = updatedCompleteTasks.filter(task => task.isChecked);
             setCompletedTasks(completedTask);
         }
 
     }
-    const [isSideboxOpen,setIsSideboxOpen] = useState(false);
-const [openTask,setOpenTask]= useState(null);
-const handleOnClick = (taskId) => {
-    const task = incompleteTasks.find(task => task.id === taskId);
-    setIsSideboxOpen(true);
-    setOpenTask(task);
-    
-}
+    const [isSideboxOpen, setIsSideboxOpen] = useState(false);
+    const [openTask, setOpenTask] = useState(null);
+    const handleOnClick = (taskId) => {
+        const task = incompleteTasks.find(task => task.id === taskId);
+        setIsSideboxOpen(true);
+        setOpenTask(task);
+
+    }
     return (
         <>
             <div className='flex flex-row'>
@@ -132,21 +107,21 @@ const handleOnClick = (taskId) => {
                         <h3 className='mt-2 mb-2 font-bold text-gray-900 '>Incomplete</h3>
                         <form className='flex flex-col items-left'>
 
-                                       
-                           
-                                {incompleteTasks.map(task => (
-                                     <div className='w-full' >
+
+
+                            {incompleteTasks.map(task => (
+                                <div className='w-full' >
                                     <Checkbox
-                                    onClick={()=>handleOnClick(task.id)}
+                                        onClick={() => handleOnClick(task.id)}
                                         key={task.id}
                                         task={task.task}
                                         time={task.time}
                                         isChecked={task.isChecked}
                                         onChange={(e) => handleTaskCheckboxChange(task.id, e)}
                                     />
-                                    </div>
-                                ))}
-                            
+                                </div>
+                            ))}
+
 
                         </form>
                     </div>
@@ -172,10 +147,10 @@ const handleOnClick = (taskId) => {
                         </form>
                     </div>
                 </div>
-                <Sidebox 
-                isSideboxOpen={isSideboxOpen}
-                setIsSideboxOpen={setIsSideboxOpen}
-                openTask={openTask}
+                <Sidebox
+                    isSideboxOpen={isSideboxOpen}
+                    setIsSideboxOpen={setIsSideboxOpen}
+                    openTask={openTask}
                 />
             </div>
 
@@ -264,41 +239,41 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, task, time, description, han
         </>
     );
 }
-const Sidebox=({isSideboxOpen,setIsSideboxOpen,openTask})=>{
+const Sidebox = ({ isSideboxOpen, setIsSideboxOpen, openTask }) => {
     if (!openTask) {
         return null;
     }
-return(
-    
-    <div className={`w-[390px] h-[122px] bg-white  mt-8 ${isSideboxOpen ? '': 'hidden'}`} >
-                    <div className=' flex flex-col'>
+    return (
 
-                        <div className='flex flex-row'>
-                        
-                            <div className='flex flex-col ml-3 mt-4 '>
-                               
-                                <h2 className=' text-black font-bold text-[18px]'>{openTask.task}</h2>
-                                <p className='text-gray-700 text-[16px] mt-0'>{openTask.description}</p>
-                            </div>
-                    
-                            <div className='relative flex justify-right items-right h-[52px] w-[52px] bg-yellow-400 ml-12 mt-4 rounded-xl'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" className='absolute right-0  mr-4 mt-4 ml-8 '>
-                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 6V12L16 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
+        <div className={`w-[390px] h-[122px] bg-white  mt-8 ${isSideboxOpen ? '' : 'hidden'}`} >
+            <div className=' flex flex-col'>
 
+                <div className='flex flex-row'>
 
+                    <div className='flex flex-col ml-3 mt-4 '>
 
-                        </div>
-                        <div className='flex flex-row'>
-                            <Button variant='sidebox' size='small' className='mt-6 ml-44' onClick={()=>setIsSideboxOpen(false)}>Skip</Button>
-                            <Button variant='sidebox' size='small' className='mt-6 ml-5 text-inline' onClick={()=>setIsSideboxOpen(false)}>Remind me later</Button>
-
-                        </div>
+                        <h2 className=' text-black font-bold text-[18px]'>{openTask.task}</h2>
+                        <p className='text-gray-700 text-[16px] mt-0'>{openTask.description}</p>
                     </div>
+
+                    <div className='relative flex justify-right items-right h-[52px] w-[52px] bg-yellow-400 ml-12 mt-4 rounded-xl'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" className='absolute right-0  mr-4 mt-4 ml-8 '>
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 6V12L16 14" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+
+
                 </div>
-    
-);
+                <div className='flex flex-row'>
+                    <Button variant='sidebox' size='small' className='mt-6 ml-44' onClick={() => setIsSideboxOpen(false)}>Skip</Button>
+                    <Button variant='sidebox' size='small' className='mt-6 ml-5 text-inline' onClick={() => setIsSideboxOpen(false)}>Remind me later</Button>
+
+                </div>
+            </div>
+        </div>
+
+    );
 }
 export default Tasks;
