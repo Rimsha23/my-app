@@ -11,9 +11,9 @@ const Tasks = () => {
 
 
     const handleOnChange = (e) => {
-        setTask(task);
-        setTime(time)
-        setDescription(description);
+       setTask(task);
+       setDescription(description);
+       setTime(time);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -47,16 +47,16 @@ const Tasks = () => {
 
     const handleTaskCheckboxChange = (taskId, e) => {
         e.preventDefault();
-
+        let newId = completedTasks.length + 1;
         const updatedIncompleteTasks = incompleteTasks.map(task => {
             if (task.id === taskId) {
-                return { ...task, isChecked: !task.isChecked };
+                return { ...task, isChecked: !task.isChecked, id: newId };
             }
             return task;
         });
 
 
-        const completedTask = updatedIncompleteTasks.find(task => task.id === taskId && task.isChecked);
+        const completedTask = updatedIncompleteTasks.find(task => task.id === newId && task.isChecked);
         if (completedTask) {
             setCompletedTasks([...completedTasks, completedTask]);
             const incompleteTask = updatedIncompleteTasks.filter(task => !task.isChecked);
@@ -110,13 +110,14 @@ const Tasks = () => {
 
 
                             {incompleteTasks.map(task => (
-                                <div className='w-full' >
+                                <div className='w-full mt-3 ml-2' >
                                     <Checkbox
                                         onClick={() => handleOnClick(task.id)}
                                         key={task.id}
                                         task={task.task}
                                         time={task.time}
                                         isChecked={task.isChecked}
+                                        className='text-gray-600 font-bold'
                                         onChange={(e) => handleTaskCheckboxChange(task.id, e)}
                                     />
                                 </div>
@@ -133,13 +134,13 @@ const Tasks = () => {
                             </div>
                             <div className='flex flex-col'>
                                 {completedTasks.map(task => (
-                                    <div className='mt-1 flex flex-row'>
+                                    <div className='mt-0 flex flex-row ml-2'>
                                         <Checkbox
                                             key={task.id}
-                                            task={task.task}
+                                             task={task.task}
                                             isChecked={task.isChecked}
                                             onChange={(e) => handleTaskCheckedboxChange(task.id, e)}
-
+                                            className='text-gray-300 '
                                         />
                                     </div>
                                 ))}
@@ -193,10 +194,8 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, task, time, description, han
                                     </svg>
                                     <input
                                         name='task'
-                                        id='task'
-
                                         placeholder=' Summary'
-                                        className='w-full h-12 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none'
+                                        className='w-full h-12 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none ml-2'
                                     />
                                 </div>
 
@@ -206,10 +205,8 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, task, time, description, han
                                     </svg>
                                     <input
                                         name='description'
-                                        id='description'
-
                                         placeholder='  Descriptions'
-                                        className='w-full h-24 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none placeholder-text-top placeholder-text-left align-text-top '
+                                        className='w-full h-24 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none placeholder-text-top  align-text-top ml-2'
                                     />
                                 </div>
                                 <div className='flex flex-row'>
@@ -218,17 +215,15 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, task, time, description, han
                                     </svg>
                                     <input
                                         name='time'
-                                        id='time'
-
                                         placeholder='  Due Date'
-                                        className='w-full h-12 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none'
+                                        className='w-full h-12 border-t-0 border-r-0 border-l-0 border-b-[1px] border-b-gray-300 focus:outline-none ml-2'
                                     />
                                 </div>
                                 <div className=' flex justify-center items-center '>
                                     <Button type="submit" variant='primary' size='modal' className='rounded-full '>Save</Button>
                                 </div>
-                                <div className='mt-0'>
-                                    <Button variant='naked' size='cancel' onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                                <div className='mt-0 flex justify-center items-center'>
+                                    <Button variant='naked' size='modal'  onClick={() => setIsModalOpen(false)}>Cancel</Button>
                                 </div>
                             </form>
                         </div>
