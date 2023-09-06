@@ -16,9 +16,10 @@ document.title= 'My App - Tasks';
        setTime(time);
     }
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
+        const maxIncompleteId = Math.max(...incompleteTasks.map(task => task.id));
         let obj = {
-            id: incompleteTasks.length + 1,
+            id: maxIncompleteId + 1,
             task: e.target['task'].value,
             time: e.target['time'].value,
             description: e.target['description'].value
