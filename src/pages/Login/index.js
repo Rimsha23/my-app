@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../components/buttons';
 import Input from '../../components/input';
 const Login = () => {
+    document.title = 'My App - Login'
     const [passwordType, setPasswordType] = useState('password');
     const [text, setText] = useState('Show')
     const handleShow = (e) => {

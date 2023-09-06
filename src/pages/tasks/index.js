@@ -4,7 +4,7 @@ import Button from '../../components/buttons';
 import Sidebar from '../../components/sidebar';
 import Checkbox from '../../components/Checkbox';
 const Tasks = () => {
-
+document.title= 'My App - Tasks';
     const [task, setTask] = useState('');
     const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
@@ -30,7 +30,7 @@ const Tasks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [incompleteTasks, setIncompleteTasks] = useState([
-        { id: 1, task: 'Submit my resume', description: 'Send my resume to DigitalTolk', time: 'Today, 17.00', isChecked: false },
+        { id: 1, task: 'Submit my resume', description: 'Send my resume to DigitalTolk', time: 'Today, 5.00', isChecked: false },
         { id: 2, task: 'Complete the test', time: 'Today, 10.00', description: '', isChecked: false },
         { id: 3, task: 'Meeting with Jack', time: '24 Feb, 15.00', description: '', isChecked: false },
         { id: 4, task: 'Buy a Chocolate for Mom', time: '24 Feb, 11.00', description: '', isChecked: false },
@@ -47,7 +47,8 @@ const Tasks = () => {
 
     const handleTaskCheckboxChange = (taskId, e) => {
         e.preventDefault();
-        let newId = completedTasks.length + 1;
+        const maxCompletedId = Math.max(...completedTasks.map(task => task.id));
+        let newId = maxCompletedId + 1 ;
         const updatedIncompleteTasks = incompleteTasks.map(task => {
             if (task.id === taskId) {
                 return { ...task, isChecked: !task.isChecked, id: newId };
@@ -66,7 +67,8 @@ const Tasks = () => {
     }
     const handleTaskCheckedboxChange = (taskId, e) => {
         e.preventDefault();
-        let newId = incompleteTasks.length + 1;
+        const maxIncompleteId = Math.max(...incompleteTasks.map(task => task.id));
+        let newId = maxIncompleteId + 1;
         const updatedCompleteTasks =
             completedTasks.map(task => {
                 if (task.id === taskId) {
@@ -104,13 +106,13 @@ const Tasks = () => {
                         </div>
                     </div>
                     <div className='w-80 h-auto ml-6'>
-                        <h3 className='mt-2 mb-2 font-bold text-gray-900 '>Incomplete</h3>
+                        <h3 className='mt-2 mb-1 font-bold text-gray-900 '>Incomplete</h3>
                         <form className='flex flex-col items-left'>
 
 
 
                             {incompleteTasks.map(task => (
-                                <div className='w-full mt-3 ml-2' >
+                                <div className='w-full mt-1 ml-2' >
                                     <Checkbox
                                         onClick={() => handleOnClick(task.id)}
                                         key={task.id}
@@ -130,7 +132,7 @@ const Tasks = () => {
                     <div className='h-auto mt-6 w-[342px] white'>
                         <form className='flex flex-col justify-left items-left ml-6'>
                             <div className='mt-0 flex items-left'>
-                                <h3 className='mb-3 font-bold text-gray-900'>Completed</h3>
+                                <h3 className='mb-1 font-bold text-gray-900'>Completed</h3>
                             </div>
                             <div className='flex flex-col'>
                                 {completedTasks.map(task => (

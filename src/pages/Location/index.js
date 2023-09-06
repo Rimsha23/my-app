@@ -3,6 +3,7 @@ import Sidebar from '../../components/sidebar';
 
 import Button from '../../components/buttons';
 const Location = () => {
+    document.title= 'My App - Locations'
     const [location, setLocation] = useState('')
     const [previousLocations,setPreviousLocations] =useState( [
 
@@ -79,7 +80,7 @@ const Location = () => {
 
                                 <div className='flex flex-col '>
 
-                                    <h2 className='ml-0 text-[15px] text-gray-700 font-bold'><span className='font-thin text-[12px] mr-3'>📍 </span>{currentLocation.location}</h2>
+                                    <h2 className='ml-0 text-[15px] text-gray-800 font-semibold'><span className='font-thin text-[12px] mr-3'>📍 </span>{currentLocation.location}</h2>
                                     <span className='text-[12px] text-gray-500 ml-6'>{currentLocation.dimensions}</span>
                                 </div>
 
@@ -96,7 +97,7 @@ const Location = () => {
 
                             {previousLocations.map(location => (
                                 <div key={location.id} className='mb-1 mt-1'>
-                                    <h2 className='text-[15px] text-gray-700 font-bold'>
+                                    <h2 className='text-[15px] text-gray-600 font-semibold'>
                                         <span className='font-thin text-[12px] mr-3'>📍 </span>
                                         {location.location}
                                     </h2>

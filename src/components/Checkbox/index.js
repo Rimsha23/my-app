@@ -10,11 +10,11 @@ const Checkbox = ({ task, time, isChecked, onChange,onClick,...props }) => {
    }
     
     return (
-        <div className='w-80 flex h-[45px] flex justify-left items-left'>
+        <div className='w-80 flex h-[45px] flex justify-left items-left mt-0'>
             <input
                 type='checkbox'
                 value='done'
-                className='accent-gray-300 '
+                className='accent-gray-300 mt-0 '
                 checked={isChecked}
                 onChange={onChange}
         
